@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf-8') as fh:
 
 setuptools.setup(
     name="txgzfunc",
-    version="0.0.2",
+    version="0.0.5",
     author="txgz",
     author_email="975663670@qq.com",
     description="tools",
@@ -17,6 +17,11 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        'python-docx',
+        'pypiwin32',
+        'zhon'
     ],
     python_requires='>=3.6',
 )
