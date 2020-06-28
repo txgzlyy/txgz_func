@@ -1,0 +1,12 @@
+.idea
+venv
+lib
+build
+dist
+*.egg-info
+
+example
+log
+my_code1.py
+
+__pycache__
