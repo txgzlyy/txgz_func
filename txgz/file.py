@@ -108,7 +108,7 @@ class ReadFile:
                 # pass
                 print(file)
                 _s = self.read_pdf(path + "/" + file)
-            if file_flow == "ppt":
+            if file_flow == "ppt" or file_flow == "pptx":
                 # pass
                 print(file)
                 _s = self.read_ppt(path + "/" + file)

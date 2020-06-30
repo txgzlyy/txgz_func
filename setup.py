@@ -21,7 +21,8 @@ setuptools.setup(
     install_requires=[
         'python-docx',
         'pypiwin32',
-        'zhon'
+        'zhon',
+        'pdfminer3k'
     ],
     python_requires='>=3.6',
 )
