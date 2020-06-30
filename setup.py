@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf-8') as fh:
 
 setuptools.setup(
     name="txgzfunc",
-    version="0.0.6",
+    version="0.0.7",
     author="txgz",
     author_email="975663670@qq.com",
     description="tools",
