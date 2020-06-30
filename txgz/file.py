@@ -34,20 +34,25 @@ class ReadFile:
 
     @staticmethod
     def read_pdf(path):
-        with open(path, "rb") as my_pdf:
-            # resource manager
-            rsrcmgr = PDFResourceManager()
-            retstr = StringIO()
-            laparams = LAParams()
-            # device
-            device = TextConverter(rsrcmgr, retstr, laparams=laparams)
-            process_pdf(rsrcmgr, device, my_pdf)
-            device.close()
-            content = retstr.getvalue()
-            retstr.close()
-            # 获取所有行
-            lines = str(content)
-            return lines
+        try:
+            with open(path, "rb") as my_pdf:
+                # resource manager
+                rsrcmgr = PDFResourceManager()
+                retstr = StringIO()
+                laparams = LAParams()
+                # device
+                device = TextConverter(rsrcmgr, retstr, laparams=laparams)
+                process_pdf(rsrcmgr, device, my_pdf)
+                device.close()
+                content = retstr.getvalue()
+                retstr.close()
+                # 获取所有行
+                lines = str(content)
+                return lines
+        except Exception as e:
+            print(path, "文件错误")
+        finally:
+            return ""
 
     @staticmethod
     def read_docx(file):
@@ -68,6 +73,26 @@ class ReadFile:
         data = re.sub(r"\n+", r"\n", line)
         return data
 
+    def read_ppt(self, ppt_file):
+        ppt = wc.Dispatch('PowerPoint.Application')
+        ppt.Visible = 1
+        a_ = str()
+        try:
+            pptSel = ppt.Presentations.Open(ppt_file)
+            slide_count = pptSel.Slides.Count
+
+            for i in range(1, slide_count + 1):
+                shape_count = pptSel.Slides(i).Shapes.Count
+                for j in range(1, shape_count + 1):
+                    if pptSel.Slides(i).Shapes(j).HasTextFrame:
+                        s = pptSel.Slides(i).Shapes(j).TextFrame.TextRange.Text
+                        a_ += s + "\n"
+        except Exception as e:
+            print(ppt_file, "文件错误")
+        finally:
+            ppt.Quit()
+        return a_
+
     def read_all(self, path, out_file):
         yl_list = []
         dirs = os.listdir(path)
@@ -83,6 +108,10 @@ class ReadFile:
                 # pass
                 print(file)
                 _s = self.read_pdf(path + "/" + file)
+            if file_flow == "ppt":
+                # pass
+                print(file)
+                _s = self.read_ppt(path + "/" + file)
             item_list = self.filter_str(_s)
             if item_list:
                 yl_list.append(item_list)
