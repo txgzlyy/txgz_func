@@ -19,18 +19,22 @@ class ReadFile:
         # 换文件格式
         word = wc.Dispatch("Word.Application")
         dirs = os.listdir(path)
-        for file in dirs:
-            files = file.split(".")
-            file_name, file_flow = files[0], files[1]
-            if file_flow == "doc":
-                print(file_name, file_flow)
-                doc = word.Documents.Open(path + "/{}.doc".format(file_name))
+        try:
+            for file in dirs:
+                files = file.split(".")
+                file_name, file_flow = files[0], files[1]
+                if file_flow == "doc":
+                    print(file_name, file_flow)
+                    doc = word.Documents.Open(path + "/{}.doc".format(file_name))
 
-                doc.SaveAs(path + "/{}.docx".format(file_name), 12)
+                    doc.SaveAs(path + "/{}.docx".format(file_name), 12)
 
-                doc.Close()
-                os.remove(path + "/{}.doc".format(file_name))
-        word.Quit()
+                    doc.Close()
+                    os.remove(path + "/{}.doc".format(file_name))
+        except Exception as e:
+            print(path, "文件错误")
+        finally:
+            word.Quit()
 
     @staticmethod
     def read_pdf(path):
